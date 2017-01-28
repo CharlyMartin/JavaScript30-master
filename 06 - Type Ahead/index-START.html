@@ -15,9 +15,46 @@
     </ul>
   </form>
 <script>
-const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+  const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
 
- dd
+  const cities = [];
+
+  fetch(endpoint)
+    .then(blob => blob.json()) // The blob returns a status 'accepted' but it does not know the data format. This is why we call the json method upon it.
+    .then(data => cities.push(...data)) // This is a chain of then, because the previous one gave us a promise too.
+
+  function findMatches(wordToMatch, cities) {
+    return cities.filter( place => {
+      // here goes the code to filter cities
+      const regex = new RegExp(wordToMatch, "gi")
+      return place.city.match(regex) || place.state.match(regex)
+    })
+  };
+
+  function displayMatches() {
+    const MatchArray = findMatches(this.value, cities)
+    const html = MatchArray.map(place => {
+      return `
+        <li>
+          <span class="name">
+            ${place.city}, ${place.state}
+          </span>
+          <span class="population">
+            ${place.population}
+          </span>
+        </li>
+      `
+    }).join('');
+    results.innerHTML = html;
+  }
+
+  const searchInput = document.querySelector('.search'),
+    results = document.querySelector('.suggestions');
+
+  searchInput.addEventListener('change', displayMatches)
+  searchInput.addEventListener('keyup', displayMatches)
+
+  //cities.push(data) does not work alone as it push the data array as a single element in the empty array. It is an array in an array. This is why we need to spread it.
 </script>
   </body>
 </html>
