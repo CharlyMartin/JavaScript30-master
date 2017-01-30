@@ -26,13 +26,28 @@
 
     // Some and Every Checks
     // Array.prototype.some() // is at least one person 19 or older?
+    const isAdult = people.some( person =>
+      ((new Date).getFullYear() - person.year > 18)
+    );
+
     // Array.prototype.every() // is everyone 19 or older?
+    const allAdust = people.every(function(person) {
+      const currentYear = (new Date).getFullYear();
+      if (currentYear - person.year > 19) {
+        return true
+      };
+    });
+
+    //// the body code for both functions is different but the logic is exactly the same, it checks wether each person is > 19YO.
 
     // Array.prototype.find()
+    const id = comments.find( item => item.id === 823423)
     // Find is like filter, but instead returns just the one you are looking for
     // find the comment with the ID of 823423
 
     // Array.prototype.findIndex()
+    const idIndex = comments.findIndex( item => item.id === 823423)
+    const newArray = comments.splice(idIndex, 1)
     // Find the comment with this ID
     // delete the comment with the ID of 823423
 
