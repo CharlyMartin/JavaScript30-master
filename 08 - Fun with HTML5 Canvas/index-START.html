@@ -7,6 +7,54 @@
 <body>
 <canvas id="draw" width="800" height="800"></canvas>
 <script>
+  const canvas = document.querySelector('#draw');
+  const ctx = canvas.getContext('2d');
+
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  ctx.strokeStyle = '#BADA55';
+  ctx.lineJoin = 'bevel';
+  ctx.lineCap = 'round';
+  ctx.lineWidth = '100'
+
+  // initializing dummy variables
+  let isDrawing = false;
+  let lastX = 0;
+  let lastY = 0;
+  let hue = 0;
+
+  function draw(e) {
+    if (!isDrawing) return
+      // if + true will trigger return and keep the function from running. In this case it means that as long as isDrawing = false, the function won't run. the ! is used a toggle.
+      // This is a safeguard / a flag to prevent the function from running further if isDrawing is false. Everyhtinh below happens if the condition is met.
+
+    ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
+    hue++; // adds 1 each the draw is called, i.e. the mouse is down.
+
+    // Call this method when you want to create a new path.
+    ctx.beginPath();
+    // starting from
+    ctx.moveTo(lastX, lastY);
+    // going to
+    ctx.lineTo(e.offsetX, e.offsetY);
+    // drawing
+    ctx.stroke();
+
+    lastX = e.offsetX;
+    lastY = e.offsetY;
+  };
+
+  canvas.addEventListener('mousemove', draw)
+  canvas.addEventListener('mousedown', (e) => {
+    isDrawing = true;
+    lastX = e.offsetX; // To start the drawing where the mouse is, not 0.
+    lastY = e.offsetY;
+  })
+  canvas.addEventListener('mouseup', () => isDrawing = false)
+  canvas.addEventListener('mouseout', () => isDrawing = false)
+  // the draw function is triggered whenever the mouse moves but isDrawing is set to true only when the mouse in down and in the window. Hence, the actual drawing only happens on mousedown.
+
 </script>
 
 <style>
