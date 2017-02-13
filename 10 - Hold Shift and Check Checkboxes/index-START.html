@@ -104,6 +104,33 @@
   </div>
 
 <script>
+  const checkboxes = document.querySelectorAll('input')
+
+  var lastChecked = null
+
+  function handleCheck(e) {
+    var inBetween = false;
+    if (e.shiftKey && this.checked) {
+    // As handleCheck is triggered when the user clicks or unclicks on a check box, we need to make sure the code runs only on click.
+
+    checkboxes.forEach(checkbox => {
+      console.log(checkbox);
+
+      if (checkbox === this || checkbox === lastChecked) {
+        inBetween = !inBetween;
+      };
+
+      if (inBetween) {
+        checkbox.checked = true
+      };
+    });
+
+
+    };
+    lastChecked = this;
+  };
+
+  checkboxes.forEach(checkbox => checkbox.addEventListener('click', handleCheck))
 </script>
 </body>
 </html>
