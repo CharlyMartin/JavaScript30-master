@@ -53,6 +53,12 @@
     video.currentTime += parseFloat(timeSkipped);
   };
 
+  function updateRange() {
+    // console.log(this.value);
+    // console.log(this.name);
+    video[this.name] = this.value
+  };
+
 // DEFINING EVENT LISTENERS
   video.addEventListener('click', togglePlay);
   video.addEventListener('play', updateButton);
@@ -60,7 +66,10 @@
 
   playButton.addEventListener('click', togglePlay);
 
-  skipButtons.forEach(button => button.addEventListener('click', skip))
+  skipButtons.forEach(button => button.addEventListener('click', skip));
+
+  ranges.forEach(range => range.addEventListener('change', updateRange));
+  ranges.forEach(range => range.addEventListener('mousemove', updateRange));
 
 </script>
 </body>
