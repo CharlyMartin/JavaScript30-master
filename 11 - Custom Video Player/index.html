@@ -22,10 +22,46 @@
      </div>
    </div>
 
-   <script src="scripts.js"></script>
-<!--   <script>
-    const player = document.querySelector('.player');
+<script>
 
-  </script> -->
+// GET THE ELEMENTS
+  const player = document.querySelector('.player');
+  const video = player.querySelector('video');
+  const progress = player.querySelector('.progress');
+  const progressBar = player.querySelector('.progress__filled');
+  const playButton = player.querySelector('.toggle');
+  const skipButtons = player.querySelectorAll('[data-skip]');
+  const ranges = player.querySelectorAll('.player__slider');
+
+// BUILD FUNCTIONS
+  function togglePlay() {
+    if (video.paused) {
+      video.play()
+    } else {
+      video.pause()
+    }
+  };
+
+  function updateButton() {
+    const icon = video.paused ? '►' : '❚ ❚';
+    playButton.textContent = icon;
+  };
+
+  function skip() {
+    const timeSkipped = this.dataset.skip;
+    console.log(timeSkipped);
+    video.currentTime += parseFloat(timeSkipped);
+  };
+
+// DEFINING EVENT LISTENERS
+  video.addEventListener('click', togglePlay);
+  video.addEventListener('play', updateButton);
+  video.addEventListener('pause', updateButton);
+
+  playButton.addEventListener('click', togglePlay);
+
+  skipButtons.forEach(button => button.addEventListener('click', skip))
+
+</script>
 </body>
 </html>
