@@ -54,8 +54,6 @@
   };
 
   function updateRange() {
-    // console.log(this.value);
-    // console.log(this.name);
     video[this.name] = this.value
   };
 
@@ -71,6 +69,10 @@
     video.currentTime = scrubTime;
   };
 
+  function backToStart() {
+    video.currentTime = 0;
+  }
+
 // DEFINING EVENT LISTENERS
   video.addEventListener('click', togglePlay);
   video.addEventListener('play', updateButton);
@@ -85,6 +87,13 @@
   ranges.forEach(range => range.addEventListener('mousemove', updateRange));
 
   progress.addEventListener('click', scrub);
+
+  let mousedown = false;
+  progress.addEventListener('mousedown', () => mousedown = true);
+  progress.addEventListener('mouseup', () => mousedown = false);
+  progress.addEventListener('mousedown', mousedown && scrub(e));
+
+  document.addEventListener('dblclick', backToStart);
 
 </script>
 </body>
