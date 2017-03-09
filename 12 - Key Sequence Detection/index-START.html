@@ -7,6 +7,24 @@
 </head>
 <body>
 <script>
+
+const secretCode = 'charlydev';
+const pressedKeys = [];
+
+window.addEventListener('keyup', (e) => {
+  console.log(e.key);
+  pressedKeys.push(e.key);
+  console.log(pressedKeys);
+
+  pressedKeys.splice(-secretCode.length - 1, pressedKeys.length - secretCode.length)
+
+  if (pressedKeys.join('').includes(secretCode)) {
+    console.log('YOU WIN');
+    cornify_add();
+  }
+
+});
+
 </script>
 </body>
 </html>
