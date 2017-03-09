@@ -59,10 +59,23 @@
     video[this.name] = this.value
   };
 
+  function updateProgress() {
+    const percentage = (video.currentTime / video.duration) * 100
+    progressBar.style.flexBasis = `${percentage}%`
+  };
+
+  function scrub(e) {
+    const percentage = (e.offsetX / progress.offsetWidth);
+    const scrubTime = percentage * video.duration;
+    console.log(scrubTime);
+    video.currentTime = scrubTime;
+  };
+
 // DEFINING EVENT LISTENERS
   video.addEventListener('click', togglePlay);
   video.addEventListener('play', updateButton);
   video.addEventListener('pause', updateButton);
+  video.addEventListener('timeupdate', updateProgress);
 
   playButton.addEventListener('click', togglePlay);
 
@@ -70,6 +83,8 @@
 
   ranges.forEach(range => range.addEventListener('change', updateRange));
   ranges.forEach(range => range.addEventListener('mousemove', updateRange));
+
+  progress.addEventListener('click', scrub);
 
 </script>
 </body>
