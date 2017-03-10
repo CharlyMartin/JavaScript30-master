@@ -43,6 +43,7 @@
   </div>
 
   <script>
+    // Debounce function with an optional wait time provided
     function debounce(func, wait = 20, immediate = true) {
       var timeout;
       return function() {
@@ -57,6 +58,40 @@
         if (callNow) func.apply(context, args);
       };
     }
+
+    // GET THE ELEMENTS
+    const images = document.querySelectorAll('img')
+
+    // BUILD THE FUNCTIONS
+    function slideIn() {
+      images.forEach(image => {
+        const pixelFromTop = window.scrollY; // pixel scrolled from the top of the page
+        const windowHeight = window.innerHeight; // height of the page in pixel
+        const imageHalfHeight = image.height / 2 // image hafl height to start slide in
+
+        const slideInAt = (pixelFromTop + windowHeight) - imageHalfHeight;
+        // console.log(slideInAt)
+        const imageBottom = image.offsetTop + image.height;
+
+        const isHalfShown = slideInAt > image.offsetTop;
+        const isNotScrolledPast = pixelFromTop < imageBottom;
+
+        if (isHalfShown && isNotScrolledPast) {
+          image.classList.add('active');
+        };
+      });
+    };
+
+    function clearAcives() {
+      if (window.scrollY === 0) {
+        images.forEach(image => image.classList.remove('active'));
+      };
+    };
+
+    // LISTEN FOR EVENTS
+    window.addEventListener('scroll', debounce(slideIn, 10))
+    window.addEventListener('scroll', clearAcives)
+
 
   </script>
 
