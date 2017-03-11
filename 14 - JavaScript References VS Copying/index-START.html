@@ -8,6 +8,18 @@
 
   <script>
     // start with strings, numbers and booleans
+    var num1 = 1;
+    var num2 = num1;
+    console.log(num1, num2); // 1 1
+    var num1 = 2
+    console.log(num1, num2); // 1 2
+    // num2 is not reasignated so it keeps it orignal value, even if num1 is now equal to something else.
+    var num1 = 1
+    var num2 = num1
+    console.log(num1, num2)
+    var num2 = 2
+    console.log(num1, num2)
+    //
 
     // Let's say we have an array
     const players = ['Wes', 'Sarah', 'Ryan', 'Poppy'];
