@@ -30,9 +30,43 @@
   </div>
 
 <script>
+  // 1
   const addItems = document.querySelector('.add-items');
   const itemsList = document.querySelector('.plates');
-  const items = [];
+  const items = JSON.parse(localStorage.getItem('list')) || []; // the initial array is gonna be either empty or populated with localstorage if 1 already exists.
+
+
+  // 2
+  function addItem(e) {
+    e.preventDefault(); //prevent the form fron navigating and recharging the page.
+    const text = (this.querySelector(['input[name=item]'])).value; //this represents the form. We are grabbing the value entered in the form.
+
+    const item = {
+      text: text,
+      done: false
+    }; // Then we build an object with it.
+
+    items.push(item); //pushing the object into array of items.
+    displayList(items, itemsList) // the list is rebuilt anytime, which is not good for performance
+    localStorage.setItem('list', JSON.stringify(items)); //creating a backup in localstorage.
+    this.reset(); //and finally reseting the form for another input.
+  };
+
+  function displayList(list = [], destination) {
+    destination.innerHTML = list.map( (item, index) => {
+      return `
+        <li>
+          <input type="checkbox" data-index=${index} id="item${index}" ${item.dome ? 'checked' : ''}>
+          <label for="item${index}"> ${item.text} </label>
+        </li>
+      `
+    }).join(''); // joimn is used to turn the array into a big HTML string;
+  };
+
+
+  // 3
+  addItems.addEventListener('submit', addItem);
+  displayList(items, itemsList);
 
 </script>
 
