@@ -31,6 +31,43 @@
   </style>
 
 <script>
+  const hero = document.querySelector('.hero'),
+        text = hero.querySelector('h1'),
+        walk = 400;
+
+
+
+  function shadow(e) {
+    const width = hero.offsetWidth,
+          height = hero.offsetHeight; // height and width of the element.
+
+    let x = e.offsetX,
+        y = e.offsetY;
+
+    if (this !== e.target) {
+      const child = e.target
+      x = x + child.offsetLeft;
+      y = y + child.offsetTop;
+    };
+
+    const xShadow = Math.round((x / width * walk) - (walk / 2)),
+          yShadow = Math.round((y / height * walk) - (walk / 2));
+
+    console.log(xShadow, yShadow);
+
+    text.style.textShadow = `
+      ${xShadow}px ${yShadow}px red,
+      ${yShadow}px ${xShadow}px blue,
+      ${xShadow * -1}px ${yShadow}px green
+    `
+    // in this case this is the element to which the event listener is attached, which is to say the hero. And e.target can be either the hero or any children element of it, like the h1 tag. this !== e.target means the mouse hovers over the h1 tag.
+    // From now on we have x and y coordinates as if the screen was one single piece.
+  };
+
+
+
+  hero.addEventListener('mousemove', shadow);
 </script>
+
 </body>
 </html>
