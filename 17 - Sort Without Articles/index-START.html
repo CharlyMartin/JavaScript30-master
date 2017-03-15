@@ -52,11 +52,13 @@
 
 
   function displayList(array = [], list) {
-    list.innerHTML = array.map(item => {
-      return `
-        <li>${item}</li>
-      `
-    }).join('');
+    list.innerHTML = array
+      .map(item => {
+        return `
+          <li>${item}</li>
+        `
+        })
+      .join('');
   };
 
   function ignoringArticle(string) {
