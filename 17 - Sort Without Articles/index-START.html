@@ -40,11 +40,32 @@
 
   </style>
 
-  <ul id="bands"></ul>
+  <ul id="bands">
+
+  </ul>
 
 <script>
-const bands = ['The Plot in You', 'The Devil Wears Prada', 'Pierce the Veil', 'Norma Jean', 'The Bled', 'Say Anything', 'The Midway State', 'We Came as Romans', 'Counterparts', 'Oh, Sleeper', 'A Skylit Drive', 'Anywhere But Here', 'An Old Dog'];
+  const listPlaceholder = document.querySelector('#bands');
 
+  const bands = ['The Plot in You', 'The Devil Wears Prada', 'Pierce the Veil', 'Norma Jean', 'The Bled', 'Say Anything', 'The Midway State', 'We Came as Romans', 'Counterparts', 'Oh, Sleeper', 'A Skylit Drive', 'Anywhere But Here', 'An Old Dog'];
+
+
+
+  function displayList(array = [], list) {
+    list.innerHTML = array.map(item => {
+      return `
+        <li>${item}</li>
+      `
+    }).join('');
+  };
+
+  function ignoringArticle(string) {
+    return string.replace(new RegExp('^a |^the |^an ', 'i'), '' );
+  };
+
+  const sortedBAnds = bands.sort( (a, b) => ignoringArticle(a) > ignoringArticle(b) ? 1 : -1 );
+
+  displayList(sortedBAnds, listPlaceholder);
 
 </script>
 
