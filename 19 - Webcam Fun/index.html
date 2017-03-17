@@ -76,9 +76,22 @@
       }, 20)
     };
 
+    function takePhoto() {
+      snap.currentTime = 0;
+      snap.play();
+
+      const data = canvas.toDataURL('iamges/jpeg');
+      const link = document.createElement('a') // This creates an anchor.
+      link.href = data;
+      link.setAttribute('download', 'handsome');
+      // link.textContent = 'DL image';
+      link.innerHTML = `<img scr="${data}" />`
+      strip.insertBefore(link, strip.firstChild);
+    }
+
     //3
     getVideo();
-    window.addEventListener('click', togglePlay);
+    video.addEventListener('click', togglePlay);
     video.addEventListener('canplay', videoToCanvas);
 
   </script>
