@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <title>Get User Media Code Along!</title>
-  <link rel="stylesheet" href="style.css">
+<!--   <link rel="stylesheet" href="style.css"> -->
 </head>
 <body>
 
   <div class="photobooth">
     <div class="controls">
       <button onClick="takePhoto()">Take Photo</button>
-<!--       <div class="rgb">
+      <div class="rgb">
         <label for="rmin">Red Min:</label>
         <input type="range" min=0 max=255 name="rmin">
         <label for="rmax">Red Max:</label>
@@ -29,7 +29,7 @@
         <input type="range" min=0 max=255 name="bmin">
         <label for="bmax">Blue Max:</label>
         <input type="range" min=0 max=255 name="bmax">
-      </div> -->
+      </div>
     </div>
 
     <canvas class="photo"></canvas>
@@ -39,7 +39,114 @@
 
   <audio class="snap" src="http://wesbos.com/demos/photobooth/snap.mp3" hidden></audio>
 
-  <script src="scripts.js"></script>
+  <script>
+    // 1
+    const video = document.querySelector('.player');
+    const canvas = document.querySelector('.photo');
+    const ctx = canvas.getContext('2d');
+    const strip = document.querySelector('.strip');
+    const snap = document.querySelector('.snap');
+
+    // 2
+    function getVideo() {
+      navigator.mediaDevices.getUserMedia( {video: true, audio: false} )
+        .then(localMediaStream => {
+          video.src = window.URL.createObjectURL(localMediaStream); // the video element needs a url to play a video. We just turn the live stream into a url to be playable. But it will just grab one frame frame from the webcam.
+          video.play(); // This will make the stream go live.
+        });
+    };
+
+    function togglePlay() {
+      if (video.paused) {
+        video.play();
+      } else {
+        video.pause();
+      }
+    };
+
+    function videoToCanvas() {
+      const width = video.videoWidth;
+      const height = video.videoHeight;
+
+      canvas.width = width;
+      canvas.height = height;
+
+      setInterval( () => {
+        ctx.drawImage(video, 0, 0, width, height)
+      }, 20)
+    };
+
+    //3
+    getVideo();
+    window.addEventListener('click', togglePlay);
+    video.addEventListener('canplay', videoToCanvas);
+
+  </script>
+
+<!-- STYLE -->
+  <style type="text/css">
+
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 10px;
+  background:#ffc600;
+}
+
+.photobooth {
+  background:white;
+  max-width:150rem;
+  margin: 2rem auto;
+  border-radius:2px;
+}
+
+/*clearfix*/
+.photobooth:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.photo {
+  width:100%;
+  float:left;
+}
+
+.player {
+  position: absolute;
+  top:20px;
+  right: 20px;
+  width:200px;
+}
+
+/*
+  Strip!
+*/
+
+.strip {
+  padding:2rem;
+}
+.strip img {
+  width:100px;
+  overflow-x: scroll;
+  padding:0.8rem 0.8rem 2.5rem 0.8rem;
+  box-shadow:0 0 3px rgba(0,0,0,0.2);
+  background:white;
+}
+
+.strip a:nth-child(5n+1) img { rotate: 10deg; }
+.strip a:nth-child(5n+2) img { rotate: -2deg; }
+.strip a:nth-child(5n+3) img { rotate: 8deg; }
+.strip a:nth-child(5n+4) img { rotate: -11deg; }
+.strip a:nth-child(5n+5) img { rotate: 12deg; }
+
+  </style>
 
 </body>
 </html>

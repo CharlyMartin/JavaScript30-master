@@ -37,6 +37,12 @@ html {
   width:200px;
 }
 
+.controls {
+  position: absolute;
+  top:20px;
+  left: 20px;
+}
+
 /*
   Strip!
 */
