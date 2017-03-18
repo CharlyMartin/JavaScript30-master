@@ -12,6 +12,31 @@
 <script>
   window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
+  const recognition = new SpeechRecognition();
+  recognition.interimResults = true;
+
+  const words = document.querySelector('.words');
+  let p = document.createElement('p');
+  words.appendChild(p);
+
+  recognition.addEventListener('result', e => {
+    var results = e.results;
+    const transcript = Array.from(results)
+      .map(result => result[0])
+      .map(result => result.transcript)
+      .join('');
+    console.log(transcript);
+
+    p.textContent = transcript;
+    if (e.results[0].isFinal) {
+      p = document.createElement('p');
+      words.appendChild(p)
+    }
+  });
+
+  recognition.addEventListener('end', recognition.start) // start without () otherwise it's gonna call the function without the event listener.
+  recognition.start(); // Start the speech recognition by asking the user for permission to use its microphone.
+
 
 </script>
 
