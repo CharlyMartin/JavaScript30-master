@@ -182,6 +182,35 @@
     </li>
 
 <script>
+
+// ELEMENTS
+const videos = document.querySelectorAll('li');
+const liArray = Array.from(videos);
+const stringTimes = liArray.map(video => video.dataset.time);
+
+const minutes = [],
+      seconds = [];
+
+stringTimes.map(time => {
+  var arr = time.split(':');
+  minutes.push(parseFloat(arr[0]));
+  seconds.push(parseFloat(arr[1]));
+});
+
+const minutesSum = minutes.reduce( (acc, val) => acc + val);
+const secondsSum = seconds.reduce( (acc, val) => acc + val)
+const secInMin = Math.floor((secondsSum / 60))
+
+const totalMinutes = minutesSum + secInMin
+const remainderInSec = secondsSum % 60;
+
+function finalSum(minutes, seconds) {
+  return `${minutes}:${seconds}`
+};
+
+const total = finalSum(totalMinutes, remainderInSec);
+console.log(total)
+
 </script>
 </body>
 </html>
