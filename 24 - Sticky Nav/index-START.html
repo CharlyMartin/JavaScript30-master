@@ -54,7 +54,28 @@
   </div>
 
 <script>
+// 1
+const navbar = document.querySelector('nav#main');
+const topNavbar = navbar.offsetTop; // It will be set once at page load but if the user resizes their screen, it won't updated cause it's not tied to nay event listener.
+const siteContent = document.querySelector('div.site-wrap');
 
+
+// 2
+function fixNav(e) {
+  let pixelScrolled = window.scrollY;
+
+  if (pixelScrolled >= topNavbar) {
+    document.body.classList.add('signal');
+    navbar.style.position = "fixed";
+    document.body.style.paddingTop = navbar.offsetHeight + "px";
+  } else {
+    navbar.style.position = "";
+    document.body.style.paddingTop = 0;
+  }
+};
+
+// 3
+window.addEventListener('scroll', fixNav)
 </script>
 
 </body>

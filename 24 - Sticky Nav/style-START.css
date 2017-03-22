@@ -72,6 +72,10 @@ li.logo {
   font-size: 30px;
 }
 
+.signal li.logo {
+  max-width: 1000px;
+}
+
 li.logo a {
   color:black;
 }
