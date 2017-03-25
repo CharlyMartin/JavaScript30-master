@@ -216,19 +216,32 @@
 
 // 2
   function handleEnter(argument) {
-    console.log('ENTER')
+    // console.log('ENTER')
     this.classList.add('trigger-enter');
     setTimeout(() => this.classList.add('trigger-enter-active'), 150) // that class is added 150ms after the first one. It needs 2 stips to animate itself as display does not animate.
     background.classList.add('open');
 
     const dropdown = this.querySelector('.dropdown');
-    console.log(dropdown)
+    console.log(dropdown);
+
+    const dropdownCoords = dropdown.getBoundingClientRect();
+    const navCoords = nav.getBoundingClientRect();
+
+    const coords = {
+      height: dropdownCoords.height,
+      width: dropdownCoords.width,
+      top: dropdownCoords.top - navCoords.top,
+      left: dropdownCoords.left - navCoords.left
+    }
+
+    background.style.setProperty('height', `${coords.height}px`);
+    background.style.setProperty('width', `${coords.width}px`);
+    background.style.setProperty('transform', `translate(${coords.left}px, ${coords.top}px)`);
   };
 
   function handleLeave(argument) {
-    console.log('LEAVE')
-    this.classList.remove('trigger-enter-active');
-    setTimeout(() => this.classList.remove('trigger-enter'), 150);
+    // console.log('LEAVE')
+    this.classList.remove('trigger-enter-active', 'trigger-enter');
     background.classList.remove('open');
   };
 
